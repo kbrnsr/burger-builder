@@ -10,7 +10,7 @@ const controls = [
 ];
 
 const BuildControls = (props) => {
-  const { ingredientAdded } = props;
+  const { ingredientAdded, ingredientRemoved, disabled } = props;
   const { BuildControlsCSS } = classes;
   return (
     <div className={BuildControlsCSS}>
@@ -19,6 +19,8 @@ const BuildControls = (props) => {
           key={ctrl.label}
           label={ctrl.label}
           added={() => ingredientAdded(ctrl.type)}
+          removed={() => ingredientRemoved(ctrl.type)}
+          disabled={disabled[ctrl.type]}
         />
       ))}
     </div>
@@ -26,6 +28,9 @@ const BuildControls = (props) => {
 };
 BuildControls.propTypes = {
   ingredientAdded: PropTypes.func.isRequired,
+  ingredientRemoved: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  disabled: PropTypes.object.isRequired,
 };
 
 export default BuildControls;
