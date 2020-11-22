@@ -1,0 +1,24 @@
+.ButtonCSS {
+  background-color: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.ButtonCSS:first-of-type {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.SuccessCSS {
+  color: #5c9210;
+}
+
+.DangerCSS {
+  color: #944317;
+}
