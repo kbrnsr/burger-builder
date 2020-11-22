@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
-import Auxiliary from '../../../hoc/Auxiliary';
+import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 
 class Modal extends Component {
   // This whole thing should be a functional component
