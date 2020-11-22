@@ -10,10 +10,17 @@ const controls = [
 ];
 
 const BuildControls = (props) => {
-  const { ingredientAdded, ingredientRemoved, disabled } = props;
+  const {
+    ingredientAdded, ingredientRemoved, disabled, price,
+  } = props;
   const { BuildControlsCSS } = classes;
   return (
     <div className={BuildControlsCSS}>
+      <p>
+        Current price:
+        {' '}
+        <strong>{price.toFixed(2)}</strong>
+      </p>
       {controls.map((ctrl) => (
         <BuildControl
           key={ctrl.label}
@@ -31,6 +38,7 @@ BuildControls.propTypes = {
   ingredientRemoved: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   disabled: PropTypes.object.isRequired,
+  price: PropTypes.number.isRequired,
 };
 
 export default BuildControls;

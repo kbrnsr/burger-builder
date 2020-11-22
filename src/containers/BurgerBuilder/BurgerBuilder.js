@@ -54,7 +54,7 @@ class BurgerBuilder extends Component {
   }
 
   render() {
-    const { ingredients } = this.state;
+    const { ingredients, totalPrice } = this.state;
     const disabledInfo = { ...ingredients };
     Object.keys(ingredients).map((ingredient) => {
       disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
@@ -73,6 +73,7 @@ class BurgerBuilder extends Component {
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabled={disabledInfo}
+          price={totalPrice}
         />
       </Auxiliary>
     );
