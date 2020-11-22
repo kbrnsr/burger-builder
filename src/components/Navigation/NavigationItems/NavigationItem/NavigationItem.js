@@ -8,7 +8,7 @@ const NavigationItem = (props) => {
     <li className={NavigationItemCSS}>
       <a
         href={link}
-        className={active || null}
+        className={active ? 'active' : null}
       >
         {children}
       </a>

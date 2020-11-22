@@ -3,11 +3,13 @@ import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 
 const Toolbar = () => {
-  const { ToolbarCSS } = classes;
+  const { ToolbarCSS, LogoCSS } = classes;
   return (
     <header className={ToolbarCSS}>
       <div>MENU</div>
-      <Logo />
+      <div className={LogoCSS}>
+        <Logo />
+      </div>
       <nav>
         <NavigationItems />
       </nav>

@@ -3,10 +3,13 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 import classes from './SideDrawer.module.css';
 
 const SideDrawer = () => {
-  const { SideDrawerCSS } = classes;
+  const { SideDrawerCSS, LogoCSS } = classes;
   return (
     <div className={SideDrawerCSS}>
-      <Logo />
+      <div className={LogoCSS}>
+        <Logo />
+      </div>
+
       <nav>
         <NavigationItems />
       </nav>
