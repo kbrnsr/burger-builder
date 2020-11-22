@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
+import classes from './DrawerToggle.module.css';
 
 const DrawerToggle = (props) => {
   const { clicked } = props;
-  return (
-    <button
-      type="button"
-      onClick={clicked}
-    >
-      MENU
+  const { DrawerToggleCSS } = classes;
 
-    </button>
+  return (
+    <div className={DrawerToggleCSS} role="presentation" onClick={clicked}>
+      <div />
+      <div />
+      <div />
+    </div>
   );
 };
 
