@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import Auxiliary from '../../../hoc/Auxiliary';
+import Button from '../../UI/Button/Button';
 
 const OrderSummary = (props) => {
-  const { ingredients } = props;
+  const { ingredients, purchaseCancelled, purchaseContinued } = props;
   const ingredientSummary = Object.keys(ingredients)
     .map((igKey) => (
       <li key={igKey}>
@@ -20,14 +21,16 @@ const OrderSummary = (props) => {
         {ingredientSummary}
       </ul>
       <p>Continue to Checkout?</p>
-      <button type="button">CANCEL</button>
-      <button type="button">CONTINUE</button>
+      <Button clicked={purchaseCancelled} btnType="DangerCSS">CANCEL</Button>
+      <Button clicked={purchaseContinued} btnType="SuccessCSS">CONTINUE</Button>
     </Auxiliary>
   );
 };
 OrderSummary.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   ingredients: PropTypes.object.isRequired,
+  purchaseCancelled: PropTypes.func.isRequired,
+  purchaseContinued: PropTypes.func.isRequired,
 };
 
 export default OrderSummary;

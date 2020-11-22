@@ -36,6 +36,11 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   }
 
+  purchaseContinueHandler = () => {
+    // eslint-disable-next-line no-alert
+    alert('You continue!');
+  }
+
   updatePurchaseState = (ingredients) => {
     const ingredientsCopy = { ...ingredients };
     const sum = Object.values(ingredientsCopy).reduce((reduceSum, el) => reduceSum + el, 0);
@@ -93,8 +98,11 @@ class BurgerBuilder extends Component {
           modalClosed={this.purchaseCancelHandler}
           show={purchasing}
         >
-          <OrderSummary ingredients={ingredients} />
-
+          <OrderSummary
+            ingredients={ingredients}
+            purchaseCancelled={this.purchaseCancelHandler}
+            purchaseContinued={this.purchaseContinueHandler}
+          />
         </Modal>
         <Burger ingredients={ingredients} />
         <BuildControls

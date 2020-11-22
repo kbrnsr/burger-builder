@@ -6,7 +6,7 @@ const Button = (props) => {
   const { ButtonCSS } = classes;
   return (
     <button
-      className={[ButtonCSS, btnType].join(' ')}
+      className={[ButtonCSS, classes[btnType]].join(' ')}
       type="button"
       onClick={clicked}
     >
