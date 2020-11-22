@@ -3,14 +3,14 @@ import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 
 const Toolbar = () => {
-  const { ToolbarCSS, LogoCSS } = classes;
+  const { ToolbarCSS, LogoCSS, DesktopOnlyCSS } = classes;
   return (
     <header className={ToolbarCSS}>
       <div>MENU</div>
       <div className={LogoCSS}>
         <Logo />
       </div>
-      <nav>
+      <nav className={DesktopOnlyCSS}>
         <NavigationItems />
       </nav>
     </header>
