@@ -3,12 +3,12 @@ import classes from './NavigationItem.module.css';
 
 const NavigationItem = (props) => {
   const { children, link, active } = props;
-  const { NavigationItemCSS } = classes;
+  const { NavigationItemCSS, active: activeCSS } = classes;
   return (
     <li className={NavigationItemCSS}>
       <a
         href={link}
-        className={active ? 'active' : null}
+        className={active ? activeCSS : null}
       >
         {children}
       </a>
