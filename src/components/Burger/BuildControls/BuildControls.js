@@ -11,9 +11,9 @@ const controls = [
 
 const BuildControls = (props) => {
   const {
-    ingredientAdded, ingredientRemoved, disabled, price,
+    ingredientAdded, ingredientRemoved, disabled, price, purchasable,
   } = props;
-  const { BuildControlsCSS } = classes;
+  const { BuildControlsCSS, OrderButtonCSS } = classes;
   return (
     <div className={BuildControlsCSS}>
       <p>
@@ -30,6 +30,14 @@ const BuildControls = (props) => {
           disabled={disabled[ctrl.type]}
         />
       ))}
+      <button
+        disabled={!purchasable}
+        className={OrderButtonCSS}
+        type="button"
+      >
+        ORDER NOW
+
+      </button>
     </div>
   );
 };
@@ -39,6 +47,7 @@ BuildControls.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   disabled: PropTypes.object.isRequired,
   price: PropTypes.number.isRequired,
+  purchasable: PropTypes.bool.isRequired,
 };
 
 export default BuildControls;
