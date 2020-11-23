@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -37,8 +38,30 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    // eslint-disable-next-line no-alert
-    alert('You continue!');
+    const postOrder = async (order) => {
+      const response = axios.post('/orders.json', order);
+      return response;
+    };
+    const { ingredients, totalPrice } = this.state;
+    const burgerOrder = {
+      ingredients,
+      price: totalPrice,
+      customer: {
+        name: 'Kbr Nsr',
+        address: {
+          street: 'Teststreet 1',
+          zipCode: '124232',
+          country: 'Wakanda',
+        },
+        email: 'test@test.com',
+        deliveryMethod: 'fastest',
+      },
+    };
+    postOrder(burgerOrder)
+      // eslint-disable-next-line no-console
+      .then((res) => console.log('{BurgerBuilder postOrder}', res))
+      // eslint-disable-next-line no-console
+      .catch((e) => console.log('BurgerBuilder postOrder error', e));
   }
 
   updatePurchaseState = (ingredients) => {
