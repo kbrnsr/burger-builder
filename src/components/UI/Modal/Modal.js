@@ -7,8 +7,8 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 class Modal extends Component {
   // This whole thing should be a functional component
   shouldComponentUpdate(nextProps) {
-    const { show } = this.props;
-    return nextProps.show !== show;
+    const { show, children } = this.props;
+    return nextProps.show !== show || nextProps.children !== children;
   }
 
   componentDidUpdate() {

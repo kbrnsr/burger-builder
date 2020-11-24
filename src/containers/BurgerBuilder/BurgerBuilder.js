@@ -5,6 +5,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -26,6 +27,7 @@ class BurgerBuilder extends Component {
       totalPrice: 4,
       purchasable: false,
       purchasing: false,
+      loading: false,
     };
   }
 
@@ -38,11 +40,13 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
+    // eslint-disable-next-line no-unused-vars
     const postOrder = async (order) => {
       const response = axios.post('/orders.json', order);
       return response;
     };
     const { ingredients, totalPrice } = this.state;
+    // eslint-disable-next-line no-unused-vars
     const burgerOrder = {
       ingredients,
       price: totalPrice,
@@ -57,11 +61,22 @@ class BurgerBuilder extends Component {
         deliveryMethod: 'fastest',
       },
     };
+    this.setState({ loading: true });
     postOrder(burgerOrder)
-      // eslint-disable-next-line no-console
-      .then((res) => console.log('{BurgerBuilder postOrder}', res))
-      // eslint-disable-next-line no-console
-      .catch((e) => console.log('BurgerBuilder postOrder error', e));
+      .then((res) => {
+        // eslint-disable-next-line no-console
+        console.log('{BurgerBuilder postOrder}', res);
+      })
+      .catch((e) => {
+        // eslint-disable-next-line no-console
+        console.log('BurgerBuilder postOrder error', e);
+      })
+      .finally(() => {
+        this.setState({
+          loading: false,
+          purchasing: false,
+        });
+      });
   }
 
   updatePurchaseState = (ingredients) => {
@@ -102,13 +117,25 @@ class BurgerBuilder extends Component {
 
   render() {
     const {
-      ingredients, totalPrice, purchasable, purchasing,
+      ingredients, totalPrice, purchasable, purchasing, loading,
     } = this.state;
     const disabledInfo = { ...ingredients };
     Object.keys(ingredients).map((ingredient) => {
       disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
       return null;
     });
+    let orderSummary = (
+      <OrderSummary
+        ingredients={ingredients}
+        purchaseCancelled={this.purchaseCancelHandler}
+        purchaseContinued={this.purchaseContinueHandler}
+        price={totalPrice}
+      />
+    );
+
+    if (loading) {
+      orderSummary = (<Spinner />);
+    }
     /*
       Really stupid way to do it
       Object.keys(ingredients).reduce((currentTotal, key) => {
@@ -121,12 +148,7 @@ class BurgerBuilder extends Component {
           modalClosed={this.purchaseCancelHandler}
           show={purchasing}
         >
-          <OrderSummary
-            ingredients={ingredients}
-            purchaseCancelled={this.purchaseCancelHandler}
-            purchaseContinued={this.purchaseContinueHandler}
-            price={totalPrice}
-          />
+          {orderSummary}
         </Modal>
         <Burger ingredients={ingredients} />
         <BuildControls
