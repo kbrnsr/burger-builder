@@ -3,18 +3,17 @@ import Modal from '../../components/UI/Modal/Modal';
 import Auxiliary from '../Auxiliary/Auxiliary';
 
 const withErrorHandler = (WrappedComponent, axios) => class extends Component {
-  // eslint-disable-next-line react/state-in-constructor
-  state = {
-    error: null,
-  };
-
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+    };
     axios.interceptors.request.use((req) => {
-      this.setState({ error: null });
+      this.state.error = null;
       return req;
     });
-    axios.interceptors.response.use((res) => res, (error) => {
-      this.setState({ error });
+    axios.interceptors.response.use((res) => res, (e) => {
+      this.state.error = e;
     });
   }
 
