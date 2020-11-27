@@ -6,7 +6,11 @@ const DrawerToggle = (props) => {
   const { DrawerToggleCSS } = classes;
 
   return (
-    <div className={DrawerToggleCSS} role="presentation" onClick={clicked}>
+    <div
+      className={DrawerToggleCSS}
+      role="presentation"
+      onClick={clicked}
+    >
       <div />
       <div />
       <div />

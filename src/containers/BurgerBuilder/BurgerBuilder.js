@@ -29,11 +29,7 @@ class BurgerBuilder extends Component {
   }
 
   componentDidMount() {
-    const getIngredients = async () => {
-      const response = axios.get('');
-      return response;
-    };
-    getIngredients()
+    axios.get('/ingredients.json')
       .then((res) => this.setState({
         ingredients: res.data,
       }))
@@ -51,11 +47,6 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    // eslint-disable-next-line no-unused-vars
-    const postOrder = async (order) => {
-      const response = axios.post('/orders.json', order);
-      return response;
-    };
     const { ingredients, totalPrice } = this.state;
     // eslint-disable-next-line no-unused-vars
     const burgerOrder = {
@@ -73,7 +64,7 @@ class BurgerBuilder extends Component {
       },
     };
     this.setState({ loading: true });
-    postOrder(burgerOrder)
+    axios.post('/orders.json', burgerOrder)
       .then((res) => {
         // eslint-disable-next-line no-console
         console.log('{BurgerBuilder postOrder}', res);

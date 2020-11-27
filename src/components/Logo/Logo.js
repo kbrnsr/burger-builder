@@ -2,6 +2,7 @@ import burgerLogo from '../../assets/images/burger-logo.png';
 import classes from './Logo.module.css';
 
 const Logo = () => {
+  // const { height } = props;
   const { LogoCSS } = classes;
   return (
     <div className={LogoCSS}>

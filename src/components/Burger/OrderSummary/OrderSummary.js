@@ -4,7 +4,9 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
-  componentDidUpdate() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillUpdate() {
+    console.log('[OrderSummary] WillUpdate');
   }
 
   render() {
@@ -15,7 +17,6 @@ class OrderSummary extends Component {
       .map((igKey) => (
         <li key={igKey}>
           <span style={{ textTransform: 'capitalize' }}>{igKey}</span>
-          :
           {' '}
           {ingredients[igKey]}
         </li>
