@@ -5,8 +5,8 @@ import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillUpdate() {
-    console.log('[OrderSummary] WillUpdate');
+  componentDidUpdate() {
+    console.log('[OrderSummary] componentDidUpdate');
   }
 
   render() {

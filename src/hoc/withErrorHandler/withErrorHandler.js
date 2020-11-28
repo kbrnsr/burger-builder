@@ -10,10 +10,12 @@ const withErrorHandler = (WrappedComponent, axios) => class extends Component {
     };
     this.reqInterceptor = axios.interceptors.request.use((req) => {
       this.state.error = null;
+      this.forceUpdate();
       return req;
     });
     this.resInterceptor = axios.interceptors.response.use((res) => res, (e) => {
       this.state.error = e;
+      this.forceUpdate();
     });
   }
 

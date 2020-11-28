@@ -29,6 +29,7 @@ class BurgerBuilder extends Component {
   }
 
   componentDidMount() {
+    // Full link to ingredients.json
     axios.get('/ingredients.json')
       .then((res) => this.setState({
         ingredients: res.data,
@@ -124,7 +125,11 @@ class BurgerBuilder extends Component {
     const disabledInfo = { ...ingredients };
 
     let orderSummary = null;
-    let burger = error ? <p>Ingredients can&apos;t be loaded</p> : <Spinner />;
+    let burger = error ? (
+      <p style={{ textAlign: 'center' }}>
+        Ingredients can&apos;t be loaded
+      </p>
+    ) : <Spinner />;
 
     if (ingredients) {
       Object.keys(ingredients).map((ingredient) => {
