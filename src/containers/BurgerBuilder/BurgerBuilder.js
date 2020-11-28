@@ -48,6 +48,9 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
+    const { history } = this.props;
+    history.push('/checkout');
+    /*
     const { ingredients, totalPrice } = this.state;
     // eslint-disable-next-line no-unused-vars
     const burgerOrder = {
@@ -80,6 +83,7 @@ class BurgerBuilder extends Component {
           purchasing: false,
         });
       });
+    */
   }
 
   updatePurchaseState = (ingredients) => {
