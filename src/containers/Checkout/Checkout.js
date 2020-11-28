@@ -11,6 +11,16 @@ class Checkout extends Component {
     },
   }
 
+  componentDidMount() {
+    const { location } = this.props;
+    const { search } = location;
+    const urlQuery = new URLSearchParams(search);
+    const ingredients = {};
+    urlQuery.forEach((value, key) => {
+      ingredients[decodeURIComponent(key)] = parseInt(decodeURIComponent(value), 10);
+    });
+  }
+
   checkoutCancelledHandler = () => {
     const { history } = this.props;
     history.goBack();

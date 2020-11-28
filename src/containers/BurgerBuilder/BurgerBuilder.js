@@ -48,8 +48,16 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
+    const { ingredients } = this.state;
     const { history } = this.props;
-    history.push('/checkout');
+    const queryParams = Object.entries(ingredients)
+      .map(([key, value]) => `${key}=${value}`).join('&');
+    const queryString = encodeURI(queryParams);
+
+    history.push({
+      pathname: '/checkout',
+      search: `?${queryString}`,
+    });
     /*
     const { ingredients, totalPrice } = this.state;
     // eslint-disable-next-line no-unused-vars
