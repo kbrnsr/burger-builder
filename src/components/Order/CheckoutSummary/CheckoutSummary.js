@@ -4,7 +4,7 @@ import Button from '../../UI/Button/Button';
 import classes from './CheckoutSummary.module.css';
 
 const CheckoutSummary = (props) => {
-  const { ingredients } = props;
+  const { ingredients, checkoutCancelled, checkoutContinued } = props;
   const { CheckoutSummaryCSS } = classes;
   return (
     <div className={CheckoutSummaryCSS}>
@@ -17,13 +17,13 @@ const CheckoutSummary = (props) => {
         <Burger ingredients={ingredients} />
       </div>
       <Button
-        clicked={() => console.log('clicked')}
+        clicked={checkoutCancelled}
         btnType="DangerCSS"
       >
         CANCEL
       </Button>
       <Button
-        clicked={() => console.log('clicked')}
+        clicked={checkoutContinued}
         btnType="SuccessCSS"
       >
         CONTINUE
