@@ -25,6 +25,7 @@
         "extensions": [".js", ".jsx"]
       }
     ],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/state-in-constructor": "off"
   }
 }
