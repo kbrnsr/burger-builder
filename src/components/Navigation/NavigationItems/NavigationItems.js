@@ -7,8 +7,8 @@ const NavigationItems = () => {
     <ul
       className={NavigationItemsCSS}
     >
-      <NavigationItem link="/" active>Burger Builder</NavigationItem>
-      <NavigationItem link="/">Checkout</NavigationItem>
+      <NavigationItem exact link="/">Burger Builder</NavigationItem>
+      <NavigationItem exact={false} link="/orders">Orders</NavigationItem>
     </ul>
   );
 };
