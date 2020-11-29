@@ -4,24 +4,27 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
-  state = {
-    ingredients: {
-      salad: 0,
-      meat: 0,
-      cheese: 0,
-      bacon: 0,
-    },
-  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredients: null,
+      totalPrice: 0,
+    };
 
-  componentDidMount() {
-    const { location } = this.props;
+    const { location } = props;
     const { search } = location;
     const urlQuery = new URLSearchParams(search);
     const ingredients = {};
+    let price = 0;
+
     urlQuery.forEach((value, key) => {
-      ingredients[decodeURIComponent(key)] = parseInt(decodeURIComponent(value), 10);
+      if (decodeURIComponent(key) === 'price') {
+        price = parseInt(decodeURIComponent(value), 10);
+      } else {
+        ingredients[decodeURIComponent(key)] = parseInt(decodeURIComponent(value), 10);
+      }
     });
-    this.setState({ ingredients });
+    this.state = { ingredients, totalPrice: price };
   }
 
   checkoutCancelledHandler = () => {
@@ -35,7 +38,7 @@ class Checkout extends Component {
   }
 
   render() {
-    const { ingredients } = this.state;
+    const { ingredients, totalPrice } = this.state;
     const { match } = this.props;
     const { path } = match;
     return (
@@ -45,7 +48,19 @@ class Checkout extends Component {
           checkoutCancelled={this.checkoutCancelledHandler}
           checkoutContinued={this.checkoutContinuedHandler}
         />
-        <Route path={`${path}/contact-data`} component={ContactData} />
+        <Route
+          path={`${path}/contact-data`}
+          render={(props) => {
+            const { history } = props;
+            return (
+              <ContactData
+                ingredients={ingredients}
+                price={totalPrice}
+                history={history}
+              />
+            );
+          }}
+        />
       </div>
     );
   }

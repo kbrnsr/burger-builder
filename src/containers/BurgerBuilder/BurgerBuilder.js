@@ -48,50 +48,18 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    const { ingredients } = this.state;
+    const { ingredients, totalPrice } = this.state;
     const { history } = this.props;
     const queryParams = Object.entries(ingredients)
-      .map(([key, value]) => `${key}=${value}`).join('&');
-    const queryString = encodeURI(queryParams);
+      .map(([key, value]) => `${key}=${value}`);
+    queryParams.push(`price=${totalPrice}`);
+
+    const queryString = encodeURI(queryParams.join('&'));
 
     history.push({
       pathname: '/checkout',
       search: `?${queryString}`,
     });
-    /*
-    const { ingredients, totalPrice } = this.state;
-    // eslint-disable-next-line no-unused-vars
-    const burgerOrder = {
-      ingredients,
-      price: totalPrice,
-      customer: {
-        name: 'Kbr Nsr',
-        address: {
-          street: 'Teststreet 1',
-          zipCode: '124232',
-          country: 'Wakanda',
-        },
-        email: 'test@test.com',
-        deliveryMethod: 'fastest',
-      },
-    };
-    this.setState({ loading: true });
-    axios.post('/orders.json', burgerOrder)
-      .then((res) => {
-        // eslint-disable-next-line no-console
-        console.log('{BurgerBuilder postOrder}', res);
-      })
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log('BurgerBuilder postOrder error', e);
-      })
-      .finally(() => {
-        this.setState({
-          loading: false,
-          purchasing: false,
-        });
-      });
-    */
   }
 
   updatePurchaseState = (ingredients) => {
