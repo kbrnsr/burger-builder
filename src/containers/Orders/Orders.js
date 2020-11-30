@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-state */
 import { Component } from 'react';
 import Order from '../../components/Order/Order';
 import axios from '../../axios-orders';
@@ -11,9 +10,9 @@ class Orders extends Component {
   }
 
   componentDidMount() {
+    const fetchOrders = [];
     axios.get('/orders.json')
       .then((res) => {
-        const fetchOrders = [];
         Object.entries(res.data).map(([key, value]) => {
           fetchOrders.push({
             ...value,
@@ -23,9 +22,8 @@ class Orders extends Component {
         });
         this.setState({
           loading: false,
-          order: fetchOrders,
+          orders: fetchOrders,
         });
-        console.log(fetchOrders);
       })
       .catch((err) => {
         this.setState({ loading: false });
@@ -34,10 +32,24 @@ class Orders extends Component {
   }
 
   render() {
+    const { orders, loading } = this.state;
+    console.log('loading: ', loading);
+    let renderOrders = null;
+    if (orders) {
+      renderOrders = orders.map((order) => {
+        const { id, ingredients, price } = order;
+        return (
+          <Order
+            key={id}
+            ingredients={ingredients}
+            price={price}
+          />
+        );
+      });
+    }
     return (
       <div>
-        <Order />
-        <Order />
+        {renderOrders}
       </div>
     );
   }

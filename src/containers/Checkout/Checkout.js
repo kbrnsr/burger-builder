@@ -19,7 +19,7 @@ class Checkout extends Component {
 
     urlQuery.forEach((value, key) => {
       if (decodeURIComponent(key) === 'price') {
-        price = parseInt(decodeURIComponent(value), 10);
+        price = parseFloat(decodeURIComponent(value), 10);
       } else {
         ingredients[decodeURIComponent(key)] = parseInt(decodeURIComponent(value), 10);
       }

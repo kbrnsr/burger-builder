@@ -1,14 +1,40 @@
 import classes from './Order.module.css';
 
-const Order = () => {
+const Order = (props) => {
+  const { price, ingredients } = props;
   const { OrderCSS } = classes;
+
+  const renderIngredients = Object.entries(ingredients)
+    .map(([key, value]) => (
+      <span
+        key={key}
+        style={{
+          textTransform: 'capitalize',
+          display: 'inline-block',
+          margin: '0 8px',
+          border: '1px solid #ccc',
+          padding: '5px',
+        }}
+      >
+        {key}
+        {' '}
+        (
+        {value}
+        )
+      </span>
+    ));
+
   return (
     <div className={OrderCSS}>
-      <p>Ingredients: salad 1</p>
+      <p>
+        Ingredients:
+        {' '}
+        {renderIngredients}
+      </p>
       <p>
         Price:
         {' '}
-        <strong>USD 5.45</strong>
+        <strong>{price.toFixed(2)}</strong>
       </p>
     </div>
   );
