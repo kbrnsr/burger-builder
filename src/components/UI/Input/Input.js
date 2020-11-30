@@ -2,22 +2,41 @@
 import classes from './Input.module.css';
 
 const Input = (props) => {
-  const { label, inputtype } = props;
+  const {
+    label, elementType, elementConfig, value,
+  } = props;
   const { InputCSS, LabelCSS, InputElementCSS } = classes;
 
   let inputElement = null;
 
-  switch (inputtype) {
+  switch (elementType) {
     case 'input':
-      inputElement = <input className={InputElementCSS} {...props} />;
+      inputElement = (
+        <input
+          defaultValue={value}
+          className={InputElementCSS}
+          {...elementConfig}
+        />
+      );
       break;
     case 'textarea':
-      inputElement = <textarea className={InputElementCSS} {...props} />;
+      inputElement = (
+        <textarea
+          defaultValue={value}
+          className={InputElementCSS}
+          {...elementConfig}
+        />
+      );
       break;
     default:
-      inputElement = <input className={InputElementCSS} {...props} />;
+      inputElement = (
+        <input
+          defaultValue={value}
+          className={InputElementCSS}
+          {...elementConfig}
+        />
+      );
   }
-
   return (
     <div className={InputCSS}>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}

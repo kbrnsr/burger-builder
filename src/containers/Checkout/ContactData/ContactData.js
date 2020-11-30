@@ -8,11 +8,62 @@ import Input from '../../../components/UI/Input/Input';
 
 class ContactData extends Component {
   state = {
-    name: '',
-    email: '',
-    adress: {
-      street: '',
-      postalCode: '',
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+      },
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Street',
+        },
+        value: '',
+      },
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+      },
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+      },
+      deliveryMethod: {
+        elementType: 'select',
+        elementConfig: {
+          options: [{
+            value: 'fastest',
+            displayValue: 'Fastest',
+          },
+          {
+            value: 'fastest',
+            displayValue: 'Fastest',
+          },
+          ],
+        },
+        value: '',
+      },
     },
     loading: false,
   };
@@ -25,16 +76,6 @@ class ContactData extends Component {
     const burgerOrder = {
       ingredients,
       price,
-      customer: {
-        name: 'Kbr Nsr',
-        address: {
-          street: 'Teststreet 1',
-          zipCode: '124232',
-          country: 'Wakanda',
-        },
-        email: 'test@test.com',
-        deliveryMethod: 'fastest',
-      },
     };
     axios.post('/orders.json', burgerOrder)
       .then((res) => {
@@ -54,15 +95,31 @@ class ContactData extends Component {
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, orderForm } = this.state;
     const { ContactDataCSS } = classes;
-
+    const formElementsArray = [];
+    Object.entries(orderForm).map(([key, value]) => {
+      formElementsArray.push({
+        id: key,
+        config: value,
+      });
+      return undefined;
+    });
     let form = (
       <form>
-        <Input inputtype="Input" type="text" name="name" placeholder="Your Name" />
-        <Input inputtype="Input" type="email" name="email" placeholder="Your Mail" />
-        <Input inputtype="Input" type="text" name="street" placeholder="Street" />
-        <Input inputtype="Input" type="text" name="postal" placeholder="Postal Code" />
+        {formElementsArray.map((formElement) => {
+          const { config, id } = formElement;
+          const { elementType, elementConfig, value } = config;
+          return (
+            <Input
+              key={id}
+              label={id}
+              elementType={elementType}
+              elementConfig={elementConfig}
+              value={value}
+            />
+          );
+        })}
         <Button clicked={this.orderHandler} btnType="SuccessCSS">ORDER</Button>
       </form>
     );
