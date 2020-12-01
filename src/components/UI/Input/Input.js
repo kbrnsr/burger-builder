@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable react/jsx-props-no-spreading */
 import classes from './Input.module.css';
 
@@ -13,7 +14,7 @@ const Input = (props) => {
     case 'input':
       inputElement = (
         <input
-          defaultValue={value}
+          value={value}
           className={InputElementCSS}
           {...elementConfig}
         />
@@ -22,16 +23,31 @@ const Input = (props) => {
     case 'textarea':
       inputElement = (
         <textarea
-          defaultValue={value}
+          value={value}
           className={InputElementCSS}
           {...elementConfig}
         />
       );
       break;
+    case 'select':
+      inputElement = (
+        <select>
+          value=
+          {value}
+          className=
+          {InputElementCSS}
+          {elementConfig.options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.displayValue}
+            </option>
+          ))}
+        </select>
+      );
+      break;
     default:
       inputElement = (
         <input
-          defaultValue={value}
+          value={value}
           className={InputElementCSS}
           {...elementConfig}
         />
