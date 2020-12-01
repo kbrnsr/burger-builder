@@ -20,6 +20,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       street: {
         elementType: 'input',
@@ -32,6 +33,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       zipCode: {
         elementType: 'input',
@@ -46,6 +48,7 @@ class ContactData extends Component {
           maxLength: 5,
         },
         valid: false,
+        touched: false,
       },
       country: {
         elementType: 'input',
@@ -58,6 +61,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       email: {
         elementType: 'input',
@@ -70,6 +74,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       deliveryMethod: {
         elementType: 'select',
@@ -135,6 +140,7 @@ class ContactData extends Component {
     updatedFormElement.valid = this.checkValidity(
       updatedFormElement.value, updatedFormElement.validation,
     );
+    updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
     console.log(updatedFormElement);
     this.setState({ orderForm: updatedOrderForm });
@@ -170,7 +176,7 @@ class ContactData extends Component {
         {formElementsArray.map((formElement) => {
           const { config, id } = formElement;
           const {
-            elementType, elementConfig, value, valid, validation,
+            elementType, elementConfig, value, valid, validation, touched,
           } = config;
           return (
             <Input
@@ -182,6 +188,7 @@ class ContactData extends Component {
               changed={(event) => this.inputChangedHandler(event, id)}
               invalid={!valid}
               shouldValidate={validation}
+              touched={touched}
             />
           );
         })}

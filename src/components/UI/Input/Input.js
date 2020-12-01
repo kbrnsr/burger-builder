@@ -4,7 +4,7 @@ import classes from './Input.module.css';
 
 const Input = (props) => {
   const {
-    label, elementType, elementConfig, value, changed, invalid, shouldValidate,
+    label, elementType, elementConfig, value, changed, invalid, shouldValidate, touched,
   } = props;
   const {
     InputCSS, LabelCSS, InputElementCSS, InvalidCSS,
@@ -13,7 +13,7 @@ const Input = (props) => {
   let inputElement = null;
   const inputClasses = [InputElementCSS];
 
-  if (invalid && shouldValidate) {
+  if (invalid && shouldValidate && touched) {
     inputClasses.push(InvalidCSS);
   }
 
