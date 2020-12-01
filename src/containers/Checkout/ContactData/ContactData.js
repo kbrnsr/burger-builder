@@ -85,10 +85,6 @@ class ContactData extends Component {
           ],
         },
         value: '',
-        validation: {
-          required: true,
-        },
-        valid: false,
       },
     },
     loading: false,
@@ -173,7 +169,9 @@ class ContactData extends Component {
       <form onSubmit={this.orderHandler}>
         {formElementsArray.map((formElement) => {
           const { config, id } = formElement;
-          const { elementType, elementConfig, value } = config;
+          const {
+            elementType, elementConfig, value, valid, validation,
+          } = config;
           return (
             <Input
               key={id}
@@ -182,6 +180,8 @@ class ContactData extends Component {
               elementConfig={elementConfig}
               value={value}
               changed={(event) => this.inputChangedHandler(event, id)}
+              invalid={!valid}
+              shouldValidate={validation}
             />
           );
         })}
