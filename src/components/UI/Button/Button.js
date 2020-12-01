@@ -7,7 +7,7 @@ const Button = (props) => {
   return (
     <button
       className={[ButtonCSS, classes[btnType]].join(' ')}
-      type="button"
+      type="submit"
       onClick={clicked}
     >
       {children}
