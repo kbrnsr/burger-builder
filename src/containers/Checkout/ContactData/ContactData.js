@@ -90,8 +90,10 @@ class ContactData extends Component {
           ],
         },
         value: '',
+        valid: true,
       },
     },
+    formIsValid: false,
     loading: false,
   };
 
@@ -142,8 +144,14 @@ class ContactData extends Component {
     );
     updatedFormElement.touched = true;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
-    console.log(updatedFormElement);
-    this.setState({ orderForm: updatedOrderForm });
+
+    let formIsValid = true;
+    Object.entries(updatedOrderForm).map(([formIdentifier, formValue]) => {
+      formIsValid = (formValue.valid && formIsValid);
+      return formIdentifier;
+    });
+    console.log('formisvalid', formIsValid);
+    this.setState({ orderForm: updatedOrderForm, formIsValid });
   }
 
   checkValidity = (value, rules) => {
@@ -161,7 +169,7 @@ class ContactData extends Component {
   }
 
   render() {
-    const { loading, orderForm } = this.state;
+    const { loading, orderForm, formIsValid } = this.state;
     const { ContactDataCSS } = classes;
     const formElementsArray = [];
     Object.entries(orderForm).map(([key, value]) => {
@@ -192,7 +200,7 @@ class ContactData extends Component {
             />
           );
         })}
-        <Button clicked={() => console.log('clicked')} btnType="SuccessCSS">ORDER</Button>
+        <Button disabled={!formIsValid} clicked={() => console.log('clicked')} btnType="SuccessCSS">ORDER</Button>
       </form>
     );
     if (loading) {
