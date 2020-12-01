@@ -4,7 +4,7 @@ import classes from './Input.module.css';
 
 const Input = (props) => {
   const {
-    label, elementType, elementConfig, value,
+    label, elementType, elementConfig, value, changed,
   } = props;
   const { InputCSS, LabelCSS, InputElementCSS } = classes;
 
@@ -15,6 +15,7 @@ const Input = (props) => {
       inputElement = (
         <input
           value={value}
+          onChange={changed}
           className={InputElementCSS}
           {...elementConfig}
         />
@@ -24,6 +25,7 @@ const Input = (props) => {
       inputElement = (
         <textarea
           value={value}
+          onChange={changed}
           className={InputElementCSS}
           {...elementConfig}
         />
@@ -31,11 +33,11 @@ const Input = (props) => {
       break;
     case 'select':
       inputElement = (
-        <select>
-          value=
-          {value}
-          className=
-          {InputElementCSS}
+        <select
+          value={value}
+          onChange={changed}
+          className={InputElementCSS}
+        >
           {elementConfig.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.displayValue}
@@ -48,6 +50,7 @@ const Input = (props) => {
       inputElement = (
         <input
           value={value}
+          onChange={changed}
           className={InputElementCSS}
           {...elementConfig}
         />
