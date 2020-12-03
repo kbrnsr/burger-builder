@@ -14,7 +14,6 @@ class BurgerBuilder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchasable: false,
       purchasing: false,
       loading: false,
       error: false,
@@ -55,18 +54,14 @@ class BurgerBuilder extends Component {
     });
   }
 
-  updatePurchaseState = (ingredients) => {
-    const ingredientsCopy = { ...ingredients };
-    const sum = Object.values(ingredientsCopy).reduce((reduceSum, el) => reduceSum + el, 0);
-    this.setState({ purchasable: sum > 0 });
+  isPurchasable = (ingredients) => {
+    const sum = Object.values(ingredients).reduce((reduceSum, el) => reduceSum + el, 0);
+    return (sum > 0);
   }
-
-  // add and remove ingredient
-  // this.updatePurchaseState(updatedIngredients);
 
   render() {
     const {
-      purchasable, purchasing, loading, error,
+      purchasing, loading, error,
     } = this.state;
 
     const {
@@ -95,7 +90,7 @@ class BurgerBuilder extends Component {
             ingredientRemoved={onRemoveIngredient}
             disabled={disabledInfo}
             price={totalPrice}
-            purchasable={purchasable}
+            purchasable={this.isPurchasable(ingredients)}
             ordered={this.purchaseHandler}
           />
         </Auxiliary>
