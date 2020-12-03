@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.module.css';
 import axios from '../../../axios-orders';
@@ -216,4 +217,9 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => ({
+  ingredients: state.ingredients,
+  price: state.totalPrice,
+});
+
+export default connect(mapStateToProps, null)(ContactData);
