@@ -30,13 +30,13 @@ class BurgerBuilder extends Component {
 
   componentDidMount() {
     // Full link to ingredients.json
-    axios.get('/ingredients.json')
+    /* axios.get('/ingredients.json')
       .then((res) => this.setState({
         ingredients: res.data,
       }))
       .catch(() => {
         this.setState({ error: true });
-      });
+      }); */
   }
 
   purchaseHandler = () => {
