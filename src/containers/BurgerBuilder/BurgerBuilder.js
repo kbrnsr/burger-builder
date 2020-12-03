@@ -10,18 +10,10 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as aTypes from '../../store/actions';
 
-const INGREDIENT_PRICES = {
-  salad: 0.5,
-  cheese: 0.4,
-  meat: 1.3,
-  bacon: 0.7,
-};
-
 class BurgerBuilder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalPrice: 4,
       purchasable: false,
       purchasing: false,
       loading: false,
@@ -69,41 +61,18 @@ class BurgerBuilder extends Component {
     this.setState({ purchasable: sum > 0 });
   }
 
-  addIngredientHandler = (type) => {
-    const { ingredients, totalPrice } = this.state;
-    const updatedCount = ingredients[type] + 1;
-    const updatedIngredients = { ...ingredients };
-    updatedIngredients[type] = updatedCount;
-    const newPrice = totalPrice + INGREDIENT_PRICES[type];
-    this.setState({
-      totalPrice: newPrice,
-      ingredients: updatedIngredients,
-    });
-    this.updatePurchaseState(updatedIngredients);
-  }
-
-  removeIngredientHandler = (type) => {
-    const { ingredients, totalPrice } = this.state;
-    const oldCount = ingredients[type];
-    if (oldCount <= 0) {
-      return;
-    }
-    const updatedCount = oldCount - 1;
-    const updatedIngredients = { ...ingredients };
-    updatedIngredients[type] = updatedCount;
-    const newPrice = totalPrice - INGREDIENT_PRICES[type];
-    this.setState({
-      totalPrice: newPrice,
-      ingredients: updatedIngredients,
-    });
-    this.updatePurchaseState(updatedIngredients);
-  }
+  // add and remove ingredient
+  // this.updatePurchaseState(updatedIngredients);
 
   render() {
     const {
-      totalPrice, purchasable, purchasing, loading, error,
+      purchasable, purchasing, loading, error,
     } = this.state;
-    const { ingredients, onAddIngredient, onRemoveIngredient } = this.props;
+
+    const {
+      ingredients, totalPrice, onAddIngredient, onRemoveIngredient,
+    } = this.props;
+
     const disabledInfo = { ...ingredients };
 
     let orderSummary = null;
@@ -166,6 +135,7 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = (state) => ({
   ingredients: state.ingredients,
+  totalPrice: state.totalPrice,
 });
 const mapDispatchToProps = (dispatch) => ({
   onAddIngredient: (ingredientName) => dispatch({
