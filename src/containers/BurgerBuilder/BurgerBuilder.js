@@ -77,33 +77,34 @@ class BurgerBuilder extends Component {
       </p>
     ) : <Spinner />;
 
-    if (ingredients) {
-      Object.keys(ingredients).map((ingredient) => {
-        disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
-        return null;
-      });
-      burger = (
-        <Auxiliary>
-          <Burger ingredients={ingredients} />
-          <BuildControls
-            ingredientAdded={onAddIngredient}
-            ingredientRemoved={onRemoveIngredient}
-            disabled={disabledInfo}
-            price={totalPrice}
-            purchasable={this.isPurchasable(ingredients)}
-            ordered={this.purchaseHandler}
-          />
-        </Auxiliary>
-      );
-      orderSummary = (
-        <OrderSummary
-          ingredients={ingredients}
-          purchaseCancelled={this.purchaseCancelHandler}
-          purchaseContinued={this.purchaseContinueHandler}
+    Object.keys(ingredients).map((ingredient) => {
+      disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
+      return null;
+    });
+
+    burger = (
+      <Auxiliary>
+        <Burger ingredients={ingredients} />
+        <BuildControls
+          ingredientAdded={onAddIngredient}
+          ingredientRemoved={onRemoveIngredient}
+          disabled={disabledInfo}
           price={totalPrice}
+          purchasable={this.isPurchasable(ingredients)}
+          ordered={this.purchaseHandler}
         />
-      );
-    }
+      </Auxiliary>
+    );
+
+    orderSummary = (
+      <OrderSummary
+        ingredients={ingredients}
+        purchaseCancelled={this.purchaseCancelHandler}
+        purchaseContinued={this.purchaseContinueHandler}
+        price={totalPrice}
+      />
+    );
+
     if (loading) {
       orderSummary = (<Spinner />);
     }
@@ -114,6 +115,7 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = ingredients[key] <= 0;
       return currentTotal;
     }, {}); */
+
     return (
       <Auxiliary>
         <Modal
