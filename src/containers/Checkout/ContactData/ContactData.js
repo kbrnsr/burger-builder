@@ -6,6 +6,8 @@ import classes from './ContactData.module.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions';
 
 class ContactData extends Component {
   state = {
@@ -96,12 +98,13 @@ class ContactData extends Component {
       },
     },
     formIsValid: false,
-    loading: false,
   };
 
   orderHandler = (event) => {
     const { orderForm } = this.state;
-    const { ingredients, price, history } = this.props;
+    const {
+      ingredients, price, onOrderBurger,
+    } = this.props;
     event.preventDefault();
     const formData = {};
     Object.entries(orderForm).map(([formElementIdentifier, formElement]) => {
@@ -110,28 +113,12 @@ class ContactData extends Component {
       return value;
     });
 
-    this.setState({ loading: true });
-
     const burgerOrder = {
       ingredients,
       price,
       orderData: formData,
     };
-    axios.post('/orders.json', burgerOrder)
-      .then((res) => {
-        console.log('{BurgerBuilder postOrder}', res);
-        this.setState({
-          loading: false,
-        });
-        history.push('/');
-      })
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log('BurgerBuilder postOrder error', e);
-        this.setState({
-          loading: false,
-        });
-      });
+    onOrderBurger(burgerOrder);
   }
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -171,7 +158,8 @@ class ContactData extends Component {
   }
 
   render() {
-    const { loading, orderForm, formIsValid } = this.state;
+    const { orderForm, formIsValid } = this.state;
+    const { loading } = this.props;
     const { ContactDataCSS } = classes;
     const formElementsArray = [];
     Object.entries(orderForm).map(([key, value]) => {
@@ -220,6 +208,11 @@ class ContactData extends Component {
 const mapStateToProps = (state) => ({
   ingredients: state.ingredients,
   price: state.totalPrice,
+  loading: state.loading,
 });
 
-export default connect(mapStateToProps, null)(ContactData);
+const maptDispatchToProps = (dispatch) => ({
+  onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+});
+
+export default connect(mapStateToProps, maptDispatchToProps)(withErrorHandler(ContactData, axios));
