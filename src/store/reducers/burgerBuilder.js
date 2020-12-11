@@ -8,13 +8,9 @@ const INGREDIENT_PRICES = {
 };
 
 const initialState = {
-  ingredients: {
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0,
-  },
+  ingredients: [],
   totalPrice: 4,
+  error: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,6 +35,23 @@ const reducer = (state = initialState, action) => {
           [ingredientName]: ingredients[ingredientName] - 1,
         },
         totalPrice: totalPrice - INGREDIENT_PRICES[ingredientName],
+      };
+    case aTypes.SET_INGREDIENTS:
+      // eslint-disable-next-line no-case-declarations
+      const {
+        salad, bacon, cheese, meat,
+      } = action.ingredients;
+      return {
+        ...state,
+        ingredients: {
+          salad, bacon, cheese, meat,
+        },
+        error: false,
+      };
+    case aTypes.FETCH_INGREDIENTS_FAILED:
+      return {
+        ...state,
+        error: true,
       };
     default:
       return state;
