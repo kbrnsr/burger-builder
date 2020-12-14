@@ -1,7 +1,9 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.module.css';
+import * as actions from '../../store/actions';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Auth extends Component {
@@ -86,6 +88,14 @@ class Auth extends Component {
     return isValid;
   };
 
+  submitHandler = (event) => {
+    event.preventDefault();
+    const { onAuth } = this.props;
+    const { controls } = this.state;
+    const { email, password } = controls;
+    onAuth(email.value, password.value);
+  };
+
   render() {
     const { controls } = this.state;
     const { AuthCSS } = classes;
@@ -116,7 +126,7 @@ class Auth extends Component {
 
     return (
       <div className={AuthCSS}>
-        <form>
+        <form onSubmit={this.submitHandler}>
           {form}
           <Button
             clicked={() => console.log('clicked')}
@@ -132,4 +142,8 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapDispatchToProps = (dispatch) => ({
+  onAuth: (email, password) => dispatch(actions.auth(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(Auth);
