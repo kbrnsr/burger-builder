@@ -38,6 +38,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
       };
+    case aTypes.FETCH_ORDERS_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case aTypes.FETCH_ORDERS_SUCCESS:
+      // eslint-disable-next-line no-case-declarations
+      const { orders: actionOrders } = action;
+      return {
+        ...state,
+        orders: actionOrders,
+        loading: false,
+      };
+    case aTypes.FETCH_ORDERS_FAIL:
+      // eslint-disable-next-line no-case-declarations
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }
