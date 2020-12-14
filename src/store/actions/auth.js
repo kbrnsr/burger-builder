@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as aTypes from './actionTypes';
 
 export const authStart = () => ({
@@ -14,6 +15,25 @@ export const authFail = (error) => ({
   error,
 });
 
-export const auth = () => (dispatch) => {
+export const auth = (email, password) => (dispatch) => {
+  const authKey = process.env.REACT_APP_FIREBASEAPIKEY;
   dispatch(authStart());
+  const authData = {
+    email,
+    password,
+    returnSecureToken: true,
+  };
+  axios
+    .post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${authKey}`,
+      authData,
+    )
+    .then((res) => {
+      console.log('{auth} res', res);
+      dispatch(authSuccess());
+    })
+    .catch((error) => {
+      console.log('{auth error}', error);
+      dispatch(authFail());
+    });
 };
