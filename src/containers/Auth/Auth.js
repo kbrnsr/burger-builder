@@ -1,0 +1,135 @@
+import { Component } from 'react';
+import Input from '../../components/UI/Input/Input';
+import Button from '../../components/UI/Button/Button';
+import classes from './Auth.module.css';
+
+// eslint-disable-next-line react/prefer-stateless-function
+class Auth extends Component {
+  state = {
+    // eslint-disable-next-line react/no-unused-state
+    controls: {
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Mail address',
+        },
+        value: '',
+        validation: {
+          required: true,
+          isEmail: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      password: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'password',
+          placeholder: 'Password',
+        },
+        value: '',
+        validation: {
+          required: true,
+          minLength: 8,
+        },
+        valid: false,
+        touched: false,
+      },
+    },
+  };
+
+  inputChangedHandler = (event, controlName) => {
+    const { controls } = this.state;
+    const eventTargetValue = event.target.value;
+    const updatedControls = {
+      ...controls,
+      [controlName]: {
+        ...controls[controlName],
+        value: event.target.value,
+        valid: this.checkValidity(eventTargetValue,
+          controls[controlName].validation),
+        touched: true,
+      },
+    };
+    this.setState({ controls: updatedControls });
+  }
+
+  checkValidity = (value, rules) => {
+    let isValid = true;
+    if (!rules) {
+      return true;
+    }
+
+    if (rules.required) {
+      isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    return isValid;
+  };
+
+  render() {
+    const { controls } = this.state;
+    const { AuthCSS } = classes;
+    const formElementsArray = Object.entries(controls)
+      .map(([key, value]) => ({
+        id: key,
+        config: value,
+      }));
+    const form = formElementsArray.map((formElement) => {
+      const { config, id } = formElement;
+      const {
+        elementType, elementConfig, value, valid, validation, touched,
+      } = config;
+      return (
+        <Input
+          key={id}
+          label={id}
+          elementType={elementType}
+          elementConfig={elementConfig}
+          value={value}
+          changed={(event) => this.inputChangedHandler(event, id)}
+          invalid={!valid}
+          shouldValidate={validation}
+          touched={touched}
+        />
+      );
+    });
+
+    return (
+      <div className={AuthCSS}>
+        <form>
+          {form}
+          <Button
+            clicked={() => console.log('clicked')}
+            btnType="SuccessCSS"
+            disabled={false}
+          >
+            SUBMIT
+
+          </Button>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default Auth;
