@@ -1,4 +1,6 @@
+/* eslint-disable no-case-declarations */
 import * as aTypes from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
   orders: [],
@@ -10,53 +12,29 @@ const reducer = (state = initialState, action) => {
   const { type } = action;
   switch (type) {
     case aTypes.PURCHASE_INIT:
-      return {
-        ...state,
-        purchased: false,
-      };
+      return updateObject(state, { purchased: false });
     case aTypes.PURCHASE_BURGER_START:
-      return {
-        ...state,
-        loading: true,
-      };
+      return updateObject(state, { loading: true });
     case aTypes.PURCHASE_BURGER_SUCCESS:
-      // eslint-disable-next-line no-case-declarations
       const { orderData, orderId } = action;
-      // eslint-disable-next-line no-case-declarations
-      const newOrder = {
-        ...orderData,
-        orderId,
-      };
-      return {
-        ...state,
+      const newOrder = updateObject(orderData, { orderId });
+      return updateObject(state, {
         loading: false,
         purchased: true,
         orders: orders.concat(newOrder),
-      };
+      });
     case aTypes.PURCHASE_BURGER_FAIL:
-      return {
-        ...state,
-        loading: false,
-      };
+      return updateObject(state, { loading: false });
     case aTypes.FETCH_ORDERS_START:
-      return {
-        ...state,
-        loading: true,
-      };
+      return updateObject(state, { loading: true });
     case aTypes.FETCH_ORDERS_SUCCESS:
-      // eslint-disable-next-line no-case-declarations
       const { orders: actionOrders } = action;
-      return {
-        ...state,
+      return updateObject(state, {
         orders: actionOrders,
         loading: false,
-      };
+      });
     case aTypes.FETCH_ORDERS_FAIL:
-      // eslint-disable-next-line no-case-declarations
-      return {
-        ...state,
-        loading: false,
-      };
+      return updateObject(state, { loading: false });
     default:
       return state;
   }
