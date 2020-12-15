@@ -5,10 +5,8 @@ import Button from '../../components/UI/Button/Button';
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions';
 
-// eslint-disable-next-line react/prefer-stateless-function
 class Auth extends Component {
   state = {
-    // eslint-disable-next-line react/no-unused-state
     controls: {
       email: {
         elementType: 'input',
@@ -39,6 +37,7 @@ class Auth extends Component {
         touched: false,
       },
     },
+    isSignup: true,
   };
 
   inputChangedHandler = (event, controlName) => {
@@ -91,13 +90,17 @@ class Auth extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     const { onAuth } = this.props;
-    const { controls } = this.state;
+    const { controls, isSignup } = this.state;
     const { email, password } = controls;
-    onAuth(email.value, password.value);
+    onAuth(email.value, password.value, isSignup);
+  };
+
+  switcAuthModeHandler = () => {
+    this.setState((prevState) => ({ isSignup: !prevState.isSignup }));
   };
 
   render() {
-    const { controls } = this.state;
+    const { controls, isSignup } = this.state;
     const { AuthCSS } = classes;
     const formElementsArray = Object.entries(controls)
       .map(([key, value]) => ({
@@ -134,16 +137,23 @@ class Auth extends Component {
             disabled={false}
           >
             SUBMIT
-
           </Button>
         </form>
+        <Button
+          clicked={this.switcAuthModeHandler}
+          btnType="DangerCSS"
+        >
+          SWITCH TO
+          {' '}
+          {isSignup ? 'SIGNIN' : 'SIGNUP'}
+        </Button>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onAuth: (email, password) => dispatch(actions.auth(email, password)),
+  onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
 });
 
 export default connect(null, mapDispatchToProps)(Auth);
