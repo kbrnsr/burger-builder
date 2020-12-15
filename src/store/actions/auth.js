@@ -16,6 +16,16 @@ export const authFail = (error) => ({
   error,
 });
 
+export const authLogout = () => ({
+  type: aTypes.AUTH_LOGOUT,
+});
+
+export const checkAuthTimeout = (expirationTime) => (dispatch) => {
+  setTimeout(() => {
+    dispatch(authLogout());
+  }, expirationTime * 1000);
+};
+
 export const auth = (email, password, isSignup) => (dispatch) => {
   const authKey = process.env.REACT_APP_FIREBASEAPIKEY;
   dispatch(authStart());
@@ -36,8 +46,9 @@ export const auth = (email, password, isSignup) => (dispatch) => {
     )
     .then((res) => {
       console.log('{auth} res', res);
-      const { idToken, localId } = res.data;
+      const { idToken, localId, expiresIn } = res.data;
       dispatch(authSuccess(idToken, localId));
+      dispatch(checkAuthTimeout(expiresIn));
     })
     .catch((error) => {
       console.log('{auth error}', error);
