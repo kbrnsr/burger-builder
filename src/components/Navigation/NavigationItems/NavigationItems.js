@@ -9,7 +9,9 @@ const NavigationItems = (props) => {
       className={NavigationItemsCSS}
     >
       <NavigationItem exact link="/">Burger Builder</NavigationItem>
-      <NavigationItem exact={false} link="/orders">Orders</NavigationItem>
+      { isAuthenticated
+        ? <NavigationItem exact={false} link="/orders">Orders</NavigationItem>
+        : null}
       { !isAuthenticated
         ? <NavigationItem exact={false} link="/auth">Authenticate</NavigationItem>
         : <NavigationItem exact={false} link="/logout">Logout</NavigationItem>}

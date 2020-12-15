@@ -11,7 +11,7 @@ const controls = [
 
 const BuildControls = (props) => {
   const {
-    ingredientAdded, ingredientRemoved, disabled, price, purchasable, ordered,
+    ingredientAdded, ingredientRemoved, disabled, price, purchasable, ordered, isAuth,
   } = props;
   const { BuildControlsCSS, OrderButtonCSS } = classes;
   return (
@@ -36,7 +36,7 @@ const BuildControls = (props) => {
         type="button"
         onClick={ordered}
       >
-        ORDER NOW
+        {isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'}
       </button>
     </div>
   );

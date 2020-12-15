@@ -38,7 +38,7 @@ export const fetchOrdersSuccess = (orders) => ({
 });
 
 export const fetchOrdersFail = (error) => ({
-  type: aTypes.PURCHASE_BURGER_FAIL,
+  type: aTypes.FETCH_ORDERS_FAIL,
   error,
 });
 

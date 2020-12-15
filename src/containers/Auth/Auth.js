@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.module.css';
@@ -102,7 +103,7 @@ class Auth extends Component {
 
   render() {
     const { controls, isSignup } = this.state;
-    const { loading, error } = this.props;
+    const { loading, error, isAuthenticated } = this.props;
     const { AuthCSS } = classes;
     const formElementsArray = Object.entries(controls)
       .map(([key, value]) => ({
@@ -135,9 +136,13 @@ class Auth extends Component {
     if (error) {
       errorMessage = <p>{error.message}</p>;
     }
-
+    let authRedirect = null;
+    if (isAuthenticated) {
+      authRedirect = <Redirect to="/" />;
+    }
     return (
       <div className={AuthCSS}>
+        {authRedirect}
         {errorMessage}
         <form onSubmit={this.submitHandler}>
           {form}
@@ -165,6 +170,7 @@ class Auth extends Component {
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   error: state.auth.error,
+  isAuthenticated: state.auth.token !== null,
 });
 
 const mapDispatchToProps = (dispatch) => ({
