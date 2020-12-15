@@ -12,7 +12,7 @@ const NavigationItems = (props) => {
       <NavigationItem exact={false} link="/orders">Orders</NavigationItem>
       { !isAuthenticated
         ? <NavigationItem exact={false} link="/auth">Authenticate</NavigationItem>
-        : <NavigationItem exact={false} link="/logoout">Logout</NavigationItem>}
+        : <NavigationItem exact={false} link="/logout">Logout</NavigationItem>}
     </ul>
   );
 };
