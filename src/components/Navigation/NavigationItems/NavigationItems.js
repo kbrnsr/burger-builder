@@ -1,7 +1,8 @@
 import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.module.css';
 
-const NavigationItems = () => {
+const NavigationItems = (props) => {
+  const { isAuthenticated } = props;
   const { NavigationItemsCSS } = classes;
   return (
     <ul
@@ -9,7 +10,9 @@ const NavigationItems = () => {
     >
       <NavigationItem exact link="/">Burger Builder</NavigationItem>
       <NavigationItem exact={false} link="/orders">Orders</NavigationItem>
-      <NavigationItem exact={false} link="/auth">Authentication</NavigationItem>
+      { !isAuthenticated
+        ? <NavigationItem exact={false} link="/auth">Authenticate</NavigationItem>
+        : <NavigationItem exact={false} link="/logoout">Logout</NavigationItem>}
     </ul>
   );
 };

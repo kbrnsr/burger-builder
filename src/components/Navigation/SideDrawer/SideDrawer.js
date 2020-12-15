@@ -6,7 +6,7 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 
 const SideDrawer = (props) => {
-  const { closed, open } = props;
+  const { closed, open, isAuth } = props;
   const {
     SideDrawerCSS, LogoCSS, OpenCSS, CloseCSS,
   } = classes;
@@ -23,7 +23,7 @@ const SideDrawer = (props) => {
         </div>
 
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={isAuth} />
         </nav>
       </div>
     </Auxiliary>
