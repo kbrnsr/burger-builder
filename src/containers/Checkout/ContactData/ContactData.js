@@ -100,7 +100,7 @@ class ContactData extends Component {
   orderHandler = (event) => {
     const { orderForm } = this.state;
     const {
-      ingredients, price, onOrderBurger,
+      ingredients, price, onOrderBurger, token,
     } = this.props;
     event.preventDefault();
     const formData = {};
@@ -115,7 +115,7 @@ class ContactData extends Component {
       price,
       orderData: formData,
     };
-    onOrderBurger(burgerOrder);
+    onOrderBurger(burgerOrder, token);
   }
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -204,7 +204,9 @@ class ContactData extends Component {
             />
           );
         })}
-        <Button disabled={!formIsValid} clicked={() => console.log('clicked')} btnType="SuccessCSS">ORDER</Button>
+        <Button disabled={!formIsValid} clicked={() => console.log('clicked')} btnType="SuccessCSS">
+          ORDER
+        </Button>
       </form>
     );
     if (loading) {
@@ -223,10 +225,11 @@ const mapStateToProps = (state) => ({
   ingredients: state.burgerBuilder.ingredients,
   price: state.burgerBuilder.totalPrice,
   loading: state.order.loading,
+  token: state.auth.token,
 });
 
 const maptDispatchToProps = (dispatch) => ({
-  onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+  onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
 });
 
 export default connect(mapStateToProps, maptDispatchToProps)(withErrorHandler(ContactData, axios));
