@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import PropTypes from 'prop-types';
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
@@ -14,10 +16,14 @@ const SideDrawer = (props) => {
   if (open) {
     attachedClasses = [SideDrawerCSS, OpenCSS];
   }
+
   return (
     <Auxiliary>
       <Backdrop show={open} clicked={closed} />
-      <div className={attachedClasses.join(' ')}>
+      <div
+        className={attachedClasses.join(' ')}
+        onClick={closed}
+      >
         <div className={LogoCSS}>
           <Logo />
         </div>
