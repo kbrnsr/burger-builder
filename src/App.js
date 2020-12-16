@@ -1,4 +1,6 @@
-import { Route, Switch, Redirect } from 'react-router-dom';
+import {
+  Route, Switch, Redirect, withRouter,
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Component } from 'react';
 import Layout from './hoc/Layout/Layout';
@@ -56,4 +58,4 @@ const mapDispatchToProps = (dispatch) => ({
   onTryAutoSignUp: () => dispatch(actions.authCheckState()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

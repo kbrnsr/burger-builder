@@ -3,7 +3,6 @@ import classes from './Order.module.css';
 const Order = (props) => {
   const { price, ingredients } = props;
   const { OrderCSS } = classes;
-
   const renderIngredients = Object.entries(ingredients)
     .map(([key, value]) => (
       <span
