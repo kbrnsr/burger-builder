@@ -153,12 +153,15 @@ Auth.propTypes = {
   error: PropTypes.bool.isRequired,
   errorObject: PropTypes.oneOfType([
     PropTypes.oneOf([null]),
-    PropTypes.instanceOf(Object),
-  ]).isRequired,
+    PropTypes.instanceOf(Error),
+  ]),
   loading: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   onSetAuthRedirectPath: PropTypes.func.isRequired,
   building: PropTypes.bool.isRequired,
+};
+Auth.defaultProps = {
+  errorObject: null,
 };
 
 const mapStateToProps = (state) => ({
