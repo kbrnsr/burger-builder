@@ -22,8 +22,7 @@ const Burger = (props) => {
   );
 };
 Burger.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default Burger;
