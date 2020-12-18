@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Button from '../../../components/UI/Button/Button';
 import classes from './ContactData.module.css';
 import axios from '../../../axios-orders';
@@ -8,6 +9,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions';
+import { updateObject } from '../../../shared/utility';
 
 class ContactData extends Component {
   state = {
@@ -98,11 +100,11 @@ class ContactData extends Component {
   };
 
   orderHandler = (event) => {
+    event.preventDefault();
     const { orderForm } = this.state;
     const {
       ingredients, price, onOrderBurger, token, userId,
     } = this.props;
-    event.preventDefault();
     const formData = {};
     Object.entries(orderForm).map(([formElementIdentifier, formElement]) => {
       const { value } = formElement;
@@ -121,16 +123,18 @@ class ContactData extends Component {
 
   inputChangedHandler = (event, inputIdentifier) => {
     const { orderForm } = this.state;
-    const updatedOrderForm = {
-      ...orderForm,
-    };
-    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value, updatedFormElement.validation,
-    );
-    updatedFormElement.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    const updatedFormElement = updateObject(orderForm[inputIdentifier],
+      {
+        value: event.target.value,
+        valid: this.checkValidity(
+          event.target.value, orderForm[inputIdentifier].validation,
+        ),
+        touched: true,
+      });
+    const updatedOrderForm = updateObject(orderForm, {
+      [inputIdentifier]: updatedFormElement,
+    });
 
     let formIsValid = true;
     Object.entries(updatedOrderForm).map(([formIdentifier, formValue]) => {
@@ -222,6 +226,15 @@ class ContactData extends Component {
   }
 }
 
+ContactData.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  onOrderBurger: PropTypes.func.isRequired,
+  price: PropTypes.number.isRequired,
+  ingredients: PropTypes.instanceOf(Array).isRequired,
+};
+
 const mapStateToProps = (state) => ({
   ingredients: state.burgerBuilder.ingredients,
   price: state.burgerBuilder.totalPrice,
@@ -230,8 +243,8 @@ const mapStateToProps = (state) => ({
   userId: state.auth.userId,
 });
 
-const maptDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
   onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
 });
 
-export default connect(mapStateToProps, maptDispatchToProps)(withErrorHandler(ContactData, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

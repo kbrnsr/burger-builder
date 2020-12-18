@@ -1,11 +1,13 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.module.css';
 import * as actions from '../../store/actions';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { updateObject } from '../../shared/utility';
 
 class Auth extends Component {
   state = {
@@ -52,16 +54,15 @@ class Auth extends Component {
   inputChangedHandler = (event, controlName) => {
     const { controls } = this.state;
     const eventTargetValue = event.target.value;
-    const updatedControls = {
-      ...controls,
-      [controlName]: {
-        ...controls[controlName],
-        value: event.target.value,
+
+    const updatedControls = updateObject(controls, {
+      [controlName]: updateObject(controls[controlName], {
+        value: eventTargetValue,
         valid: this.checkValidity(eventTargetValue,
           controls[controlName].validation),
         touched: true,
-      },
-    };
+      }),
+    });
     this.setState({ controls: updatedControls });
   }
 
@@ -176,6 +177,23 @@ class Auth extends Component {
     );
   }
 }
+
+Auth.propTypes = {
+  authRedirectPath: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  error: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object,
+  ]),
+  loading: PropTypes.bool.isRequired,
+  onAuth: PropTypes.func.isRequired,
+  onSetAuthRedirectPath: PropTypes.func.isRequired,
+  building: PropTypes.bool.isRequired,
+};
+
+Auth.defaultProps = {
+  error: false,
+};
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.module.css';
 
@@ -17,6 +18,10 @@ const NavigationItems = (props) => {
         : <NavigationItem exact={false} link="/logout">Logout</NavigationItem>}
     </ul>
   );
+};
+
+NavigationItems.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default NavigationItems;

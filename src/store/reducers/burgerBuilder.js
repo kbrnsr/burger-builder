@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import * as aTypes from '../actions/actionTypes';
-import { updateObject } from '../utility';
+import { updateObject } from '../../shared/utility';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -10,9 +10,9 @@ const INGREDIENT_PRICES = {
 };
 
 const initialState = {
-  ingredients: {},
+  ingredients: null,
   totalPrice: 4,
-  error: true,
+  error: false,
   building: false,
 };
 

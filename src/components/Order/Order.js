@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
 import classes from './Order.module.css';
 
 const Order = (props) => {
   const { price, ingredients } = props;
   const { OrderCSS } = classes;
+  if (!ingredients) { return <p>Can&apos;t render order</p>; }
   const renderIngredients = Object.entries(ingredients)
     .map(([key, value]) => (
       <span
@@ -37,6 +39,13 @@ const Order = (props) => {
       </p>
     </div>
   );
+};
+
+Order.propTypes = {
+  price: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  ingredients: PropTypes.object.isRequired,
+
 };
 
 export default Order;

@@ -32,8 +32,9 @@ const CheckoutSummary = (props) => {
   );
 };
 CheckoutSummary.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.instanceOf(Object).isRequired,
+  checkoutCancelled: PropTypes.func.isRequired,
+  checkoutContinued: PropTypes.func.isRequired,
 };
 
 export default CheckoutSummary;

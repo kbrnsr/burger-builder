@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Order from '../../components/Order/Order';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -17,18 +18,16 @@ class Orders extends Component {
     console.log('{Orders} loading: ', loading);
     let renderOrders = <Spinner />;
     if (!loading) {
-      if (orders.length > 0) {
-        renderOrders = orders.map((order) => {
-          const { id, ingredients, price } = order;
-          return (
-            <Order
-              key={id}
-              ingredients={ingredients}
-              price={price}
-            />
-          );
-        });
-      }
+      renderOrders = orders.map((order) => {
+        const { id, ingredients, price } = order;
+        return (
+          <Order
+            key={id}
+            ingredients={ingredients}
+            price={price}
+          />
+        );
+      });
     }
     return (
       <div>
@@ -37,6 +36,15 @@ class Orders extends Component {
     );
   }
 }
+
+Orders.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  orders: PropTypes.array.isRequired,
+  userId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  onFetchOrders: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   orders: state.order.orders,

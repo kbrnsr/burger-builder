@@ -47,11 +47,14 @@ class Layout extends Component {
   }
 }
 
-Layout.propTypes = { children: PropTypes.node };
+Layout.propTypes = {
+  children: PropTypes.node,
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 Layout.defaultProps = { children: null };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.token !== null,
+  isAuthenticated: state.auth.token !== '',
 });
 
 export default connect(mapStateToProps, null)(Layout);

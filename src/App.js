@@ -3,6 +3,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
@@ -51,8 +52,13 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  onTryAutoSignUp: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+};
+
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.token !== null,
+  isAuthenticated: state.auth.token !== '',
 });
 
 const mapDispatchToProps = (dispatch) => ({

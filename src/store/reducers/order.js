@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import * as aTypes from '../actions/actionTypes';
-import { updateObject } from '../utility';
+import { updateObject } from '../../shared/utility';
 
 const initialState = {
   orders: [],

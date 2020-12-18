@@ -38,6 +38,7 @@ const SideDrawer = (props) => {
 SideDrawer.propTypes = {
   closed: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  isAuth: PropTypes.bool.isRequired,
 };
 
 export default SideDrawer;

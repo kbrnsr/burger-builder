@@ -44,11 +44,11 @@ const BuildControls = (props) => {
 BuildControls.propTypes = {
   ingredientAdded: PropTypes.func.isRequired,
   ingredientRemoved: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  disabled: PropTypes.object.isRequired,
+  disabled: PropTypes.instanceOf(Object).isRequired,
   price: PropTypes.number.isRequired,
   purchasable: PropTypes.bool.isRequired,
   ordered: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired,
 };
 
 export default BuildControls;

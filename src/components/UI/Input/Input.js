@@ -1,5 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react/jsx-props-no-spreading */
+import PropTypes from 'prop-types';
 import classes from './Input.module.css';
 
 const Input = (props) => {
@@ -70,6 +71,18 @@ const Input = (props) => {
       {inputElement}
     </div>
   );
+};
+
+Input.propTypes = {
+  changed: PropTypes.func.isRequired,
+  elementType: PropTypes.string.isRequired,
+  touched: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  invalid: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  shouldValidate: PropTypes.object.isRequired,
+  elementConfig: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default Input;

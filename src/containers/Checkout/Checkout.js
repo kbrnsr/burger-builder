@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
@@ -41,6 +42,16 @@ class Checkout extends Component {
     return summary;
   }
 }
+
+Checkout.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  ingredients: PropTypes.object.isRequired,
+  purchased: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  history: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  match: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   ingredients: state.burgerBuilder.ingredients,

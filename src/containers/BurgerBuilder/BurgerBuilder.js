@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -66,36 +67,37 @@ class BurgerBuilder extends Component {
         Ingredients can&apos;t be loaded
       </p>
     ) : <Spinner />;
+    if (ingredients) {
+      if (!error) {
+        Object.keys(ingredients).map((ingredient) => {
+          disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
+          return null;
+        });
 
-    if (!error) {
-      Object.keys(ingredients).map((ingredient) => {
-        disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
-        return null;
-      });
+        burger = (
+          <Auxiliary>
+            <Burger ingredients={ingredients} />
+            <BuildControls
+              ingredientAdded={onAddIngredient}
+              ingredientRemoved={onRemoveIngredient}
+              disabled={disabledInfo}
+              price={totalPrice}
+              purchasable={this.isPurchasable(ingredients)}
+              ordered={this.purchaseHandler}
+              isAuth={isAuthenticated}
+            />
+          </Auxiliary>
+        );
 
-      burger = (
-        <Auxiliary>
-          <Burger ingredients={ingredients} />
-          <BuildControls
-            ingredientAdded={onAddIngredient}
-            ingredientRemoved={onRemoveIngredient}
-            disabled={disabledInfo}
+        orderSummary = (
+          <OrderSummary
+            ingredients={ingredients}
+            purchaseCancelled={this.purchaseCancelHandler}
+            purchaseContinued={this.purchaseContinueHandler}
             price={totalPrice}
-            purchasable={this.isPurchasable(ingredients)}
-            ordered={this.purchaseHandler}
-            isAuth={isAuthenticated}
           />
-        </Auxiliary>
-      );
-
-      orderSummary = (
-        <OrderSummary
-          ingredients={ingredients}
-          purchaseCancelled={this.purchaseCancelHandler}
-          purchaseContinued={this.purchaseContinueHandler}
-          price={totalPrice}
-        />
-      );
+        );
+      }
     }
 
     /*
@@ -118,6 +120,21 @@ class BurgerBuilder extends Component {
     );
   }
 }
+
+BurgerBuilder.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  onRemoveIngredient: PropTypes.func.isRequired,
+  onAddIngredient: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  ingredients: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  history: PropTypes.object.isRequired,
+  onInitPurchase: PropTypes.func.isRequired,
+  onSetAuthRedirectPath: PropTypes.func.isRequired,
+  onInitIngredients: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   ingredients: state.burgerBuilder.ingredients,

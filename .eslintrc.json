@@ -26,7 +26,6 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
-    "react/state-in-constructor": "off",
-    "react/prop-types": "off"
+    "react/state-in-constructor": "off"
   }
 }
