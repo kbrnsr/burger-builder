@@ -81,7 +81,7 @@ class Auth extends Component {
   render() {
     const { controls, isSignup } = this.state;
     const {
-      loading, error, isAuthenticated, authRedirectPath,
+      loading, error, errorObject, isAuthenticated, authRedirectPath,
     } = this.props;
     const { AuthCSS } = classes;
     const formElementsArray = Object.entries(controls)
@@ -114,7 +114,7 @@ class Auth extends Component {
     }
     let errorMessage = null;
     if (error) {
-      errorMessage = <p>{error.message}</p>;
+      errorMessage = <p>{errorObject.message}</p>;
     }
     let authRedirect = null;
     if (isAuthenticated) {
@@ -150,24 +150,22 @@ class Auth extends Component {
 Auth.propTypes = {
   authRedirectPath: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  error: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.object,
-  ]),
+  error: PropTypes.bool.isRequired,
+  errorObject: PropTypes.oneOfType([
+    PropTypes.oneOf([null]),
+    PropTypes.instanceOf(Object),
+  ]).isRequired,
   loading: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
   onSetAuthRedirectPath: PropTypes.func.isRequired,
   building: PropTypes.bool.isRequired,
 };
 
-Auth.defaultProps = {
-  error: false,
-};
-
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   error: state.auth.error,
-  isAuthenticated: state.auth.token !== null,
+  errorObject: state.auth.errorObject,
+  isAuthenticated: state.auth.token !== '',
   building: state.burgerBuilder.building,
   authRedirectPath: state.auth.authRedirectPath,
 });

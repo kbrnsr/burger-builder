@@ -2,36 +2,41 @@ import * as aTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
-  token: null,
-  userId: null,
-  error: null,
+  token: '',
+  userId: '',
+  error: false,
+  errorObject: null,
   loading: false,
   authRedirectPath: '/',
 };
 
-const authStart = (state) => updateObject(state, { error: null, loading: true });
+const authStart = (state) => updateObject(state, {
+  error: false, errorObject: null, loading: true,
+});
 
 const authSuccess = (state, action) => {
   const { idToken, userId } = action;
   return updateObject(state, {
     token: idToken,
     userId,
-    error: null,
+    error: false,
+    errorObject: null,
     loading: false,
   });
 };
 
 const authFail = (state, action) => {
-  const { error } = action;
+  const { error: errorObject } = action;
   return updateObject(state, {
-    error,
+    error: true,
+    errorObject,
     loading: false,
   });
 };
 
 const authLogout = (state) => updateObject(state, {
-  token: null,
-  userId: null,
+  token: '',
+  userId: '',
 });
 
 const setAuthRedirectPath = (state, action) => updateObject(state, {

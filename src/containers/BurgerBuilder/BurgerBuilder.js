@@ -140,7 +140,7 @@ const mapStateToProps = (state) => ({
   ingredients: state.burgerBuilder.ingredients,
   totalPrice: state.burgerBuilder.totalPrice,
   error: state.burgerBuilder.error,
-  isAuthenticated: state.auth.token !== null,
+  isAuthenticated: state.auth.token !== '',
 });
 const mapDispatchToProps = (dispatch) => ({
   onAddIngredient: (ingredientName) => dispatch(actions
