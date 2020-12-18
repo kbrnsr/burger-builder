@@ -58,7 +58,7 @@ class Auth extends Component {
     const updatedControls = updateObject(controls, {
       [controlName]: updateObject(controls[controlName], {
         value: eventTargetValue,
-        valid: this.checkValidity(eventTargetValue,
+        valid: checkValidity(eventTargetValue,
           controls[controlName].validation),
         touched: true,
       }),
