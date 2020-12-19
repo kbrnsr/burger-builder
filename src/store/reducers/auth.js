@@ -37,6 +37,7 @@ const authFail = (state, action) => {
 const authLogout = (state) => updateObject(state, {
   token: '',
   userId: '',
+  loading: false,
 });
 
 const setAuthRedirectPath = (state, action) => updateObject(state, {
