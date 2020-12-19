@@ -11,7 +11,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -121,19 +121,28 @@ class BurgerBuilder extends Component {
 }
 
 BurgerBuilder.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  onRemoveIngredient: PropTypes.func.isRequired,
-  onAddIngredient: PropTypes.func.isRequired,
-  error: PropTypes.bool.isRequired,
-  totalPrice: PropTypes.number.isRequired,
+  isAuthenticated: PropTypes.bool,
+  onRemoveIngredient: PropTypes.func,
+  onAddIngredient: PropTypes.func,
+  error: PropTypes.bool,
+  totalPrice: PropTypes.number,
   ingredients: PropTypes.instanceOf(Object),
-  history: PropTypes.instanceOf(Object).isRequired,
-  onInitPurchase: PropTypes.func.isRequired,
-  onSetAuthRedirectPath: PropTypes.func.isRequired,
-  onInitIngredients: PropTypes.func.isRequired,
+  history: PropTypes.instanceOf(Object),
+  onInitPurchase: PropTypes.func,
+  onSetAuthRedirectPath: PropTypes.func,
+  onInitIngredients: PropTypes.func,
 };
 BurgerBuilder.defaultProps = {
+  isAuthenticated: false,
+  onRemoveIngredient: () => { },
+  onAddIngredient: () => { },
+  error: false,
+  totalPrice: 4.0,
   ingredients: {},
+  history: {},
+  onInitPurchase: () => { },
+  onSetAuthRedirectPath: () => { },
+  onInitIngredients: () => { },
 };
 
 const mapStateToProps = (state) => ({
