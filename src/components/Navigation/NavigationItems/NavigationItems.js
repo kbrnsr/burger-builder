@@ -21,7 +21,8 @@ const NavigationItems = (props) => {
 };
 
 NavigationItems.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
+NavigationItems.defaultProps = { isAuthenticated: false };
 
 export default NavigationItems;
