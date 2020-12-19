@@ -141,7 +141,6 @@ class ContactData extends Component {
       formIsValid = (formValue.valid && formIsValid);
       return formIdentifier;
     });
-    console.log('formisvalid', formIsValid);
     this.setState({ orderForm: updatedOrderForm, formIsValid });
   }
 
