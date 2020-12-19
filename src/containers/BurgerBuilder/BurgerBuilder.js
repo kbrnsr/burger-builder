@@ -67,7 +67,7 @@ class BurgerBuilder extends Component {
         Ingredients can&apos;t be loaded
       </p>
     ) : <Spinner />;
-    if (ingredients) {
+    if (Object.values(ingredients).length > 0) {
       if (!error) {
         Object.keys(ingredients).map((ingredient) => {
           disabledInfo[ingredient] = disabledInfo[ingredient] <= 0;
@@ -127,13 +127,14 @@ BurgerBuilder.propTypes = {
   onAddIngredient: PropTypes.func.isRequired,
   error: PropTypes.bool.isRequired,
   totalPrice: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  ingredients: PropTypes.object.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  history: PropTypes.object.isRequired,
+  ingredients: PropTypes.instanceOf(Object),
+  history: PropTypes.instanceOf(Object).isRequired,
   onInitPurchase: PropTypes.func.isRequired,
   onSetAuthRedirectPath: PropTypes.func.isRequired,
   onInitIngredients: PropTypes.func.isRequired,
+};
+BurgerBuilder.defaultProps = {
+  ingredients: {},
 };
 
 const mapStateToProps = (state) => ({

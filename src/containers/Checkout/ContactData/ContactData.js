@@ -201,7 +201,7 @@ ContactData.propTypes = {
   token: PropTypes.string.isRequired,
   onOrderBurger: PropTypes.func.isRequired,
   price: PropTypes.number.isRequired,
-  ingredients: PropTypes.instanceOf(Array).isRequired,
+  ingredients: PropTypes.instanceOf(Object).isRequired,
 };
 
 const mapStateToProps = (state) => ({

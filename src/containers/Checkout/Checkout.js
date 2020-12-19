@@ -21,7 +21,7 @@ class Checkout extends Component {
     const { match } = this.props;
     const { path } = match;
     let summary = <Redirect to="/" />;
-    if (ingredients) {
+    if (Object.values(ingredients).length > 0) {
       const purchaseRedirect = purchased ? <Redirect to="/" /> : null;
       summary = (
         <div>
@@ -44,13 +44,10 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.instanceOf(Object).isRequired,
   purchased: PropTypes.bool.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  history: PropTypes.object.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  match: PropTypes.object.isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
+  match: PropTypes.instanceOf(Object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
