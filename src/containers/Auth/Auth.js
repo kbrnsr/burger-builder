@@ -153,7 +153,7 @@ Auth.propTypes = {
   error: PropTypes.bool.isRequired,
   errorObject: PropTypes.oneOfType([
     PropTypes.oneOf([null]),
-    PropTypes.instanceOf(Error),
+    PropTypes.instanceOf(Object),
   ]),
   loading: PropTypes.bool.isRequired,
   onAuth: PropTypes.func.isRequired,
